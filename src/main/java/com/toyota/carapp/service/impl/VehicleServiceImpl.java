@@ -69,4 +69,9 @@ public class VehicleServiceImpl implements VehicleService {
         vehicleRepository.deleteById(vehicleId);
     }
 
+    @Override
+    public Vehicle findVehicleById(Long vehicleId) {
+        return vehicleRepository.findById(vehicleId).orElseThrow(null);
+    }
+
 }

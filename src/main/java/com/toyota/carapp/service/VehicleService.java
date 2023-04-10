@@ -1,7 +1,8 @@
 package com.toyota.carapp.service;
 
-import com.toyota.carapp.dto.UserDto;
 import com.toyota.carapp.dto.VehicleDto;
+import com.toyota.carapp.model.Vehicle;
+
 
 import java.util.List;
 
@@ -13,4 +14,5 @@ public interface VehicleService {
     VehicleDto updateVehicle(VehicleDto vehicleDto, Long vehicleId);
 
     void deleteVehicle(Long vehicleId);
+    Vehicle findVehicleById(Long vehicleId);
 }
