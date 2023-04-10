@@ -36,7 +36,7 @@ public class VehicleServiceImpl implements VehicleService {
                 vehicleDto.getProductionDate()
                 );
 
-        return vehicleDtoConverter.convert(vehicle);
+        return vehicleDtoConverter.convert(vehicleRepository.save(vehicle));
     }
 
     @Override
@@ -55,10 +55,10 @@ public class VehicleServiceImpl implements VehicleService {
         Vehicle vehicle = vehicleRepository.findById(vehicleId).orElseThrow(null);
 
             Vehicle updatedVehicle = new Vehicle(
-                    vehicleDto.getId(),
+                    vehicle.getId(),
                     vehicleDto.getModel(),
-                    vehicle.getColor(),
-                    vehicle.getProductionDate()
+                    vehicleDto.getColor(),
+                    vehicleDto.getProductionDate()
             );
 
         return vehicleDtoConverter.convert(vehicleRepository.save(updatedVehicle));

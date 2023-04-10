@@ -14,6 +14,7 @@ import java.util.Set;
 @Table(name="vehicles")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Vehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,7 +34,7 @@ public class Vehicle {
     cascade = CascadeType.ALL)
     private Set<Defect> defects = new HashSet<>();
 
-    //all args exception
+    //instead of other args parameter. for dto converter
     public Vehicle(Long id, String model, String color, String productionDate) {
         this.id = id;
         this.model = model;
