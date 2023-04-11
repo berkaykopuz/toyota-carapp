@@ -14,18 +14,17 @@ import java.util.List;
 
 @Service
 public class VehicleServiceImpl implements VehicleService {
-    private VehicleDtoConverter vehicleDtoConverter;
+
     private VehicleRepository vehicleRepository;
-    private PasswordEncoder passwordEncoder;
+
     private VehicleDtoConverter converter;
     @Autowired
     public VehicleServiceImpl(VehicleRepository vehicleRepository,
-                              PasswordEncoder passwordEncoder, VehicleDtoConverter converter,
-                              VehicleDtoConverter vehicleDtoConverter) {
+                              VehicleDtoConverter converter
+                              ) {
         this.vehicleRepository = vehicleRepository;
-        this.passwordEncoder = passwordEncoder;
         this.converter = converter;
-        this.vehicleDtoConverter = vehicleDtoConverter;
+
     }
 
     @Override
@@ -36,18 +35,18 @@ public class VehicleServiceImpl implements VehicleService {
                 vehicleDto.getProductionDate()
                 );
 
-        return vehicleDtoConverter.convert(vehicleRepository.save(vehicle));
+        return converter.convert(vehicleRepository.save(vehicle));
     }
 
     @Override
     public List<VehicleDto> getAllVehicles() {
-        return vehicleDtoConverter.convert(vehicleRepository.findAll());
+        return converter.convert(vehicleRepository.findAll());
     }
 
     @Override
     public VehicleDto getVehicleById(Long vehicleId) {
         Vehicle vehicle = vehicleRepository.findById(vehicleId).orElseThrow(null);
-        return vehicleDtoConverter.convert(vehicle);
+        return converter.convert(vehicle);
     }
 
     @Override
@@ -61,7 +60,7 @@ public class VehicleServiceImpl implements VehicleService {
                     vehicleDto.getProductionDate()
             );
 
-        return vehicleDtoConverter.convert(vehicleRepository.save(updatedVehicle));
+        return converter.convert(vehicleRepository.save(updatedVehicle));
     }
 
     @Override
