@@ -25,9 +25,9 @@ public class Defect {
     @Column(name="type")
     private String type;
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @Column(name="registry_date")
-    private Date date;
+    @Lob
+    @Column(name = "image", length = Integer.MAX_VALUE, nullable = true)
+    private byte[] image;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="vehicle_id", nullable = false)
@@ -37,6 +37,13 @@ public class Defect {
     fetch = FetchType.LAZY,
     cascade = CascadeType.ALL)
     private Set<DefectLocation> locations = new HashSet<>();
+
+    public Defect(String type, byte[] image, Vehicle vehicle) {
+
+        this.type = type;
+        this.image = image;
+        this.vehicle = vehicle;
+    }
 
     public Defect(Long id, String type, Vehicle vehicle) {
         this.id = id;

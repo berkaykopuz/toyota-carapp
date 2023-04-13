@@ -45,6 +45,8 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests().antMatchers("/api/vehicles/**").hasAuthority("OPERATOR")
                 .and()
+                .authorizeRequests().antMatchers("/api/defects/**").hasAuthority("OPERATOR")
+                .and()
                 .httpBasic();
 
         http.addFilterBefore(jwtAuthFilter(), UsernamePasswordAuthenticationFilter.class);

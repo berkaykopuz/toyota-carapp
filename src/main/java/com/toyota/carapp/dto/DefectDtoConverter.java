@@ -21,7 +21,6 @@ public class DefectDtoConverter {
     public DefectDto convert(Defect defect){
         return new DefectDto(defect.getId(),
                 defect.getType(),
-                defect.getDate(),
                 converter.convert(new ArrayList<>(defect.getLocations())));
     }
     public List<DefectDto> convert(List<Defect> defectList){
