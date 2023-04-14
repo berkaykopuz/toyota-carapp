@@ -4,6 +4,7 @@ package com.toyota.carapp.controller;
 import com.toyota.carapp.dto.DefectDto;
 import com.toyota.carapp.dto.UpdateDefectRequest;
 import com.toyota.carapp.model.Defect;
+import com.toyota.carapp.service.DefectCreationService;
 import com.toyota.carapp.service.DefectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -22,9 +23,11 @@ import java.util.List;
 @RequestMapping("/api")
 public class DefectController {
     private DefectService defectService;
+    private DefectCreationService creationService;
     @Autowired
-    public DefectController(DefectService defectService) {
+    public DefectController(DefectService defectService, DefectCreationService creationService) {
         this.defectService = defectService;
+        this.creationService = creationService;
     }
 
     @GetMapping("defects")
@@ -40,6 +43,15 @@ public class DefectController {
                 .contentType(MediaType.valueOf("image/png"))
                 .body(image);
 
+    }
+    @GetMapping("defects/{id}/locations/{lid}")
+    public ResponseEntity<byte[]> getPointedImagebyId(@PathVariable("id") Long defectId,
+                                                      @PathVariable("lid") Long locationId )
+            throws IOException {
+        byte[] image = creationService.getPointedImage(defectId,locationId);
+        return ResponseEntity.status(HttpStatus.OK)
+                .contentType(MediaType.valueOf("image/png"))
+                .body(image);
     }
 
     @PostMapping("defects/create")
