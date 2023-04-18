@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface DefectService {
     List<DefectDto> getAllDefects();
-    byte[] getDefectById(Long defectId);
+    DefectDto getDefectById(Long defectId);
     String createDefect(String type, Long vehicleId , MultipartFile file) throws IOException;
     DefectDto updateDefect(UpdateDefectRequest request, Long defectId);
     void deleteDefect(Long defectId);

@@ -36,22 +36,8 @@ public class DefectController {
     }
 
     @GetMapping("defects/{id}")
-    public ResponseEntity<byte[]> getDefectById(@PathVariable("id") Long defectId)
-    {
-        byte[] image = defectService.getDefectById(defectId);
-        return ResponseEntity.status(HttpStatus.OK)
-                .contentType(MediaType.valueOf("image/png"))
-                .body(image);
-
-    }
-    @GetMapping("defects/{id}/locations/{lid}")
-    public ResponseEntity<byte[]> getPointedImagebyId(@PathVariable("id") Long defectId,
-                                                      @PathVariable("lid") Long locationId )
-            throws IOException {
-        byte[] image = creationService.getPointedImage(defectId,locationId);
-        return ResponseEntity.status(HttpStatus.OK)
-                .contentType(MediaType.valueOf("image/png"))
-                .body(image);
+    public ResponseEntity<DefectDto> getDefectById(@PathVariable("id") Long defectId){
+        return new ResponseEntity<>(defectService.getDefectById(defectId),HttpStatus.OK);
     }
 
     @PostMapping("defects/create")

@@ -36,10 +36,9 @@ public class DefectServiceImpl implements DefectService {
     }
 
     @Override
-    public byte[] getDefectById(Long defectId){
+    public DefectDto getDefectById(Long defectId){
         Defect defect = defectRepository.findById(defectId).orElseThrow(null);
-        byte[] image = ImageUtils.decompressImage(defect.getImage());
-        return image;
+        return converter.convert(defect);
     }
 
     @Override
