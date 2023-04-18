@@ -16,13 +16,6 @@ public class DefectDto {
 
     private String type;
 
-    private byte[] image;
-
     private List<LocationDto> locations;
 
-    public DefectDto(Long id, String type, List<LocationDto> locations) {
-        this.id = id;
-        this.type = type;
-        this.locations = locations;
-    }
 }

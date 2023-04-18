@@ -44,7 +44,7 @@ public class DefectController {
     public ResponseEntity<String> createDefect(@RequestParam("type") String type,
                                                   @RequestParam("vehicleId") Long vehicleId,
                                                   @RequestParam("image")MultipartFile file) throws IOException {
-        return new ResponseEntity<>(defectService.createDefect(type,vehicleId,file), HttpStatus.OK);
+        return new ResponseEntity<>(defectService.createDefect(type,vehicleId,file), HttpStatus.CREATED);
     }
 
     @PutMapping("defects/{id}/update")
