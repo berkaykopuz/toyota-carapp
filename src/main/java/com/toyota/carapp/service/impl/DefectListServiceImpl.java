@@ -4,6 +4,7 @@ import com.toyota.carapp.dto.DefectDto;
 import com.toyota.carapp.dto.DefectDtoConverter;
 
 import com.toyota.carapp.model.Defect;
+import com.toyota.carapp.model.Vehicle;
 import com.toyota.carapp.repository.ListDefectRepository;
 import com.toyota.carapp.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,9 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -62,4 +65,13 @@ public class DefectListServiceImpl implements DefectListService {
         return converter.convert(repository.findByTypeContaining(type));
     }
 
+    public List<DefectDto> findByVehicleId(Long vehicleId){
+        Vehicle vehicle = vehicleService.findVehicleById(vehicleId);
+        Set<Defect> defects = vehicle.getDefects();
+
+        List<Defect> listOfDefects = new ArrayList<>();
+        listOfDefects.addAll(defects);
+
+        return converter.convert(listOfDefects);
+    }
 }

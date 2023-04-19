@@ -38,20 +38,25 @@ public class DefectListController {
                 .body(image);
     }
 
-    @GetMapping("/paged")
+    @GetMapping("/defect-list/paged")
     public ResponseEntity<Page<DefectDto>> getAllPaged(@RequestParam(value="pageNo",defaultValue = "0",required = false) int pageNo,
                                                        @RequestParam(value="pageSize",defaultValue = "1",required = false) int pageSize) {
         return new ResponseEntity<>(defectListService.getAllDefects(pageNo, pageSize),HttpStatus.OK);
     }
 
-    @GetMapping("/sorted")
+    @GetMapping("/defect-list/sorted")
     public ResponseEntity<List<DefectDto>> getAllSorted(@RequestParam String sortBy, @RequestParam String sortOrder) {
         return ResponseEntity.ok(defectListService.getAllSortedDefects(sortBy, sortOrder));
     }
 
-    @GetMapping("/search")
+    @GetMapping("/defect-list/searchbytype")
     public ResponseEntity<List<DefectDto>> searchByType(@RequestParam(value = "type") String type) {
         return ResponseEntity.ok(defectListService.findByTypeContaining(type));
+    }
+
+    @GetMapping("/defect-list/searchbyvehicle")
+    public ResponseEntity<List<DefectDto>> searchByVehicle(@RequestParam(value="vehicleId") Long vehicleId){
+        return ResponseEntity.ok(defectListService.findByVehicleId(vehicleId));
     }
 
 

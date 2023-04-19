@@ -13,4 +13,6 @@ public interface DefectListService {
 
     public List<DefectDto> findByTypeContaining(String type);
 
+    public List<DefectDto> findByVehicleId(Long vehicleId);
+
 }

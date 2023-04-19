@@ -12,4 +12,5 @@ import java.util.List;
 public interface ListDefectRepository extends JpaRepository<Defect,Long> {
     List<Defect> findByTypeContaining(String type);
 
+
 }

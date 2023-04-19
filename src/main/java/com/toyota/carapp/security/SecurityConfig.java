@@ -47,6 +47,8 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests().antMatchers("/api/defects/**").hasAuthority("OPERATOR")
                 .and()
+                .authorizeRequests().antMatchers("/api/defect-list/**").hasAuthority("TEAMLEADER")
+                .and()
                 .httpBasic();
 
         http.addFilterBefore(jwtAuthFilter(), UsernamePasswordAuthenticationFilter.class);
