@@ -1,6 +1,7 @@
 package com.toyota.carapp.controller;
 
 import com.toyota.carapp.dto.DefectDto;
+import com.toyota.carapp.dto.VehicleDto;
 import com.toyota.carapp.service.DefectCreationService;
 import com.toyota.carapp.service.DefectListService;
 import com.toyota.carapp.service.DefectService;
@@ -30,7 +31,7 @@ public class DefectListController {
         this.creationService = creationService;
     }
 
-    @GetMapping("defects/defect-image/{id}")
+    @GetMapping("defect-list/image/{id}")
     public ResponseEntity<byte[]> getPointedImage(@PathVariable("id") Long defectId) throws IOException {
         byte[] image = creationService.getPointedImage(defectId);
         return ResponseEntity.status(HttpStatus.OK)
@@ -54,9 +55,14 @@ public class DefectListController {
         return ResponseEntity.ok(defectListService.findByTypeContaining(type));
     }
 
-    @GetMapping("/defect-list/searchbyvehicle")
+    @GetMapping("/defect-list/searchbyvehicleid")
     public ResponseEntity<List<DefectDto>> searchByVehicle(@RequestParam(value="vehicleId") Long vehicleId){
         return ResponseEntity.ok(defectListService.findByVehicleId(vehicleId));
+    }
+
+    @GetMapping("/defect-list/searchbyvehicle")
+    public ResponseEntity<List<VehicleDto>> searchByVehicle(@RequestParam(value="model") String model){
+        return ResponseEntity.ok(defectListService.findByVehicle(model));
     }
 
 

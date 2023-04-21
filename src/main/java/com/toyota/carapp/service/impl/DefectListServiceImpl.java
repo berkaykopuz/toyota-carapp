@@ -3,9 +3,12 @@ package com.toyota.carapp.service.impl;
 import com.toyota.carapp.dto.DefectDto;
 import com.toyota.carapp.dto.DefectDtoConverter;
 
+import com.toyota.carapp.dto.VehicleDto;
+import com.toyota.carapp.dto.VehicleDtoConverter;
 import com.toyota.carapp.model.Defect;
 import com.toyota.carapp.model.Vehicle;
 import com.toyota.carapp.repository.ListDefectRepository;
+import com.toyota.carapp.repository.VehicleRepository;
 import com.toyota.carapp.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -24,14 +28,18 @@ public class DefectListServiceImpl implements DefectListService {
     private final DefectCreationService creationService;
     private final LocationService locationService;
     private final VehicleService vehicleService;
+    private final VehicleRepository vehicleRepository;
+    private final VehicleDtoConverter vehicleDtoConverter;
     @Autowired
     public DefectListServiceImpl(ListDefectRepository repository, DefectDtoConverter converter, DefectCreationService service,
-                                 DefectService defectService, LocationService locationService, VehicleService vehicleService) {
+                                 DefectService defectService, LocationService locationService, VehicleService vehicleService, VehicleRepository vehicleRepository, VehicleDtoConverter vehicleDtoConverter) {
         this.repository = repository;
         this.converter = converter;
         this.creationService = service;
         this.locationService = locationService;
         this.vehicleService = vehicleService;
+        this.vehicleRepository = vehicleRepository;
+        this.vehicleDtoConverter = vehicleDtoConverter;
     }
 
 
@@ -73,5 +81,10 @@ public class DefectListServiceImpl implements DefectListService {
         listOfDefects.addAll(defects);
 
         return converter.convert(listOfDefects);
+    }
+
+    public List<VehicleDto> findByVehicle(String model){
+        List<Vehicle> vehicles = vehicleRepository.findByModelContaining(model);
+        return vehicleDtoConverter.convert(vehicles);
     }
 }
