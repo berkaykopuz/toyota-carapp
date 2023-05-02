@@ -1,5 +1,6 @@
 package com.toyota.carapp.exception;
 
+import com.toyota.carapp.log.Log;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,12 +35,14 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<?> NotFoundExceptionHandler(NotFoundException exception){
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+        Log.logError("demanding entity is not found");
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> generalExceptionHandler(Exception exception){
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<?> iaExceptionHandler(IllegalArgumentException exception){
+        Log.logError("taken invalid arguments");
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
 }

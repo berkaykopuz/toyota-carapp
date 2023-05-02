@@ -3,6 +3,7 @@ package com.toyota.carapp.service.impl;
 import com.toyota.carapp.dto.CreateLocationRequest;
 import com.toyota.carapp.dto.LocationDto;
 import com.toyota.carapp.dto.LocationDtoConverter;
+import com.toyota.carapp.exception.NotFoundException;
 import com.toyota.carapp.model.Defect;
 import com.toyota.carapp.model.DefectLocation;
 import com.toyota.carapp.repository.LocationRepository;
@@ -33,7 +34,7 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public LocationDto getLocationById(Long locationId) {
-        DefectLocation location = locationRepository.findById(locationId).orElseThrow();
+        DefectLocation location = locationRepository.findById(locationId).orElseThrow(()-> new NotFoundException("location didnt found."));
         return converter.convert(location);
     }
 

@@ -1,6 +1,7 @@
 package com.toyota.carapp.service.impl;
 
 import com.toyota.carapp.dto.UserDto;
+import com.toyota.carapp.exception.NotFoundException;
 import com.toyota.carapp.model.Role;
 import com.toyota.carapp.model.User;
 import com.toyota.carapp.repository.UserRepository;
@@ -46,7 +47,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUserById(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(null);
+        User user = userRepository.findById(userId).orElseThrow(()-> new NotFoundException("user didnt found."));
 
         return mapToDto(user);
 
@@ -54,7 +55,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto updateUser(UserDto userDto,Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(null);
+        User user = userRepository.findById(userId).orElseThrow(()-> new NotFoundException("user didnt found."));
 
         user.setUsername(userDto.getUsername());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));

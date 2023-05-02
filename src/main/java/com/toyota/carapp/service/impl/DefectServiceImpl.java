@@ -3,6 +3,7 @@ package com.toyota.carapp.service.impl;
 import com.toyota.carapp.dto.DefectDto;
 import com.toyota.carapp.dto.DefectDtoConverter;
 import com.toyota.carapp.dto.UpdateDefectRequest;
+import com.toyota.carapp.exception.NotFoundException;
 import com.toyota.carapp.model.Defect;
 import com.toyota.carapp.model.Vehicle;
 import com.toyota.carapp.repository.DefectRepository;
@@ -71,6 +72,7 @@ public class DefectServiceImpl implements DefectService {
 
     @Override
     public Defect findDefectById(Long defectId) {
-        return defectRepository.findById(defectId).orElseThrow(null);
+
+        return defectRepository.findById(defectId).orElseThrow(()-> new NotFoundException("defect didnt found."));
     }
 }

@@ -25,6 +25,7 @@ public class DefectListController {
     private DefectService defectService;
     private DefectCreationService creationService;
 
+
     @Autowired
     public DefectListController(DefectListService service, DefectCreationService creationService) {
         this.defectListService = service;

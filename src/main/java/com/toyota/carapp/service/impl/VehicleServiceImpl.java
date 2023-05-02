@@ -2,16 +2,16 @@ package com.toyota.carapp.service.impl;
 
 import com.toyota.carapp.dto.VehicleDto;
 import com.toyota.carapp.dto.VehicleDtoConverter;
+import com.toyota.carapp.exception.NotFoundException;
 import com.toyota.carapp.model.Vehicle;
 import com.toyota.carapp.repository.VehicleRepository;
 import com.toyota.carapp.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -47,13 +47,13 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public VehicleDto getVehicleById(Long vehicleId) {
-        Vehicle vehicle = vehicleRepository.findById(vehicleId).orElseThrow(null);
+        Vehicle vehicle = vehicleRepository.findById(vehicleId).orElseThrow(()-> new NotFoundException("vehicle didnt found."));
         return converter.convert(vehicle);
     }
 
     @Override
     public VehicleDto updateVehicle(VehicleDto vehicleDto, Long vehicleId) {
-        Vehicle vehicle = vehicleRepository.findById(vehicleId).orElseThrow(null);
+        Vehicle vehicle = vehicleRepository.findById(vehicleId).orElseThrow(()-> new NotFoundException("vehicle didnt found."));
 
             Vehicle updatedVehicle = new Vehicle(
                     vehicle.getId(),
@@ -72,7 +72,8 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public Vehicle findVehicleById(Long vehicleId) {
-        return vehicleRepository.findById(vehicleId).orElseThrow(null);
+
+        return vehicleRepository.findById(vehicleId).orElseThrow(()-> new NotFoundException("vehicle didnt found."));
     }
 
 }
